@@ -52,13 +52,34 @@ public class ClientController {
 
     @GetMapping("/doctors-timetables")
     public Collection<DoctorModel> getAllDoctorsTimeTable(){
-        return doctorService.getAllTimeTables();
+        return doctorService.getAllstuff();
     }
 
     @GetMapping("/history-of-illness")
     public Collection<Appointment> history(Principal principal){
         User user = userService.findByEmail(principal.getName());
         return user.getClientModel().getAppointments();
+    }
+
+    @GetMapping("/doctors")
+    public Collection<DoctorModel> allDoctors(){
+        return doctorService.getAllstuff();
+    }
+
+    @GetMapping("/doctors/{id}")
+    public ResponseEntity<DoctorModel> getDoctor(@PathVariable("id") Long id){
+        return ResponseEntity.ok(doctorService.getDoctorById(id));
+    }
+
+    @PostMapping("/doctors/{id}")
+    public ResponseEntity<String> getAppointment(@RequestBody Appointment appointment, @PathVariable("id") Long id, Principal principal){
+        User user = userService.findByEmail(principal.getName());
+        user.getClientModel().getAppointments().add(appointment);
+        userService.saveInfo(user);
+        DoctorModel doctorModel = doctorService.getDoctorById(id);
+        doctorModel.getDoctorAppointments().add(appointment);
+        doctorService.saveDoctor(doctorModel);
+        return ResponseEntity.ok("You appointed successfully!");
     }
 
 }

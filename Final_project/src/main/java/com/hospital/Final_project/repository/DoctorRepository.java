@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorModel, Long> {
 //    DoctorModel findByEmail(String email);
-    @Query(value="select name, office, time_table from staff", nativeQuery=true)
-    List<DoctorModel> findAllTimeTable();
+//    @Query(value="SELECT role, office, time_table FROM staff", nativeQuery=true)
+//    List<DoctorModel> findAllTimeTable();
 }

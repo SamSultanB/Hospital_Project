@@ -35,10 +35,10 @@ public class DoctorServiceimpl implements DoctorService {
         this.doctorRepository.save(doctorModel);
     }
 
-    @Override
-    public List<DoctorModel> getAllTimeTables() {
-        return doctorRepository.findAllTimeTable();
-    }
+//    @Override
+//    public List<DoctorModel> getAllTimeTables() {
+//        return doctorRepository.findAll();
+//    }
 
     @Override
     public DoctorModel getDoctorById(Long id) {
