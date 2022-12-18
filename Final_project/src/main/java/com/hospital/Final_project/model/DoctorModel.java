@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -21,15 +22,15 @@ public class DoctorModel {
     @Column(name = "role", nullable = false)
     private String role;
     @Column(name = "office", nullable = false)
-    private Integer office;
+    private String office;
 
     @Column(name = "timeTable")
     private String timeTable;
 
     @Column(name = "salary")
-    private Integer salary;
+    private String salary;
     @Column(name = "phone", nullable = false)
-    private Integer phone;
+    private String phone;
 
     @OneToOne(mappedBy = "doctorModel")
     private User user;
@@ -43,10 +44,10 @@ public class DoctorModel {
 
     public DoctorModel(
             String role,
-            Integer office,
+            String office,
             String timeTable,
-            Integer salary,
-            Integer phone
+            String salary,
+            String phone
     ) {
         this.role = role;
         this.office = office;
