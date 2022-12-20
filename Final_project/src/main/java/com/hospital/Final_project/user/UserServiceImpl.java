@@ -42,13 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(UserDTO userDTO) {
-        User user = new User(userDTO.getName(), userDTO.getSurname(), userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()),
+        User user = new User(userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()),
                 Arrays.asList(new Role(userDTO.getRole())));
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User saveInfo(User user) {
         return userRepository.save(user);
     }
 
@@ -57,8 +52,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-//    @Override
-//    public User findById(Long id) {
-//        return userRepository.findById(id);
-//    }
+    @Override
+    public User saveInfo(User user) {
+        return userRepository.save(user);
+    }
+
+
 }

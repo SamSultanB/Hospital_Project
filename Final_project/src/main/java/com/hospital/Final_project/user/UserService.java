@@ -3,13 +3,14 @@ package com.hospital.Final_project.user;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public interface UserService extends UserDetailsService {
     User save(UserDTO userDTO);
 
-    User saveInfo(User user);
-
     User findByEmail(String email);
 
-//    User findById(Long id);
+    User saveInfo(User user);
+
 }
