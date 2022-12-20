@@ -1,6 +1,7 @@
 package com.hospital.Final_project.controller;
 
 import com.hospital.Final_project.model.DoctorModel;
+import com.hospital.Final_project.model.IllnessModel;
 import com.hospital.Final_project.model.PatientModel;
 import com.hospital.Final_project.service.PatientService;
 import com.hospital.Final_project.service.DoctorService;
@@ -51,7 +52,16 @@ public class DoctorController {
         return ResponseEntity.ok(patientService.getAllPatients());
     }
 
+    @GetMapping("patients/{id}")
+    public ResponseEntity<PatientModel> getPatient(@PathVariable("id") Long id){
+        return ResponseEntity.ok(patientService.getPatientById(id));
+    }
 
+    @PostMapping("/patients/{id}")
+    public ResponseEntity<String> diagnosPatient(@PathVariable("id") Long id, @RequestBody IllnessModel illnessModel){
+        patientService.getPatientById(id).getIllnesses().add(illnessModel);
+        return ResponseEntity.ok("Diagnosed successfully!");
+    }
 
 
 }
