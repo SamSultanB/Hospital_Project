@@ -25,8 +25,9 @@ public class DoctorServiceimpl implements DoctorService {
         this.doctorRepository = doctorRepository;
     }
 
+
     @Override
-    public List<DoctorModel> getAllstuff(){
+    public Collection<DoctorModel> getAllStaff() {
         return doctorRepository.findAll();
     }
 
@@ -35,10 +36,10 @@ public class DoctorServiceimpl implements DoctorService {
         this.doctorRepository.save(doctorModel);
     }
 
-//    @Override
-//    public List<DoctorModel> getAllTimeTables() {
-//        return doctorRepository.findAll();
-//    }
+    @Override
+    public void deleteDoctor(Long id) {
+        doctorRepository.deleteById(id);
+    }
 
     @Override
     public DoctorModel getDoctorById(Long id) {

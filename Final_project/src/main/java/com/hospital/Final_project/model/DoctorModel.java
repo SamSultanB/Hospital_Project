@@ -3,12 +3,9 @@ package com.hospital.Final_project.model;
 import com.hospital.Final_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.time.LocalDate;
-import java.util.Collection;
+
 
 @Entity
 @Getter
@@ -19,14 +16,16 @@ public class DoctorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
     @Column(name = "role", nullable = false)
     private String role;
     @Column(name = "office", nullable = false)
     private String office;
-
     @Column(name = "timeTable")
     private String timeTable;
-
     @Column(name = "salary")
     private String salary;
     @Column(name = "phone", nullable = false)
@@ -35,20 +34,20 @@ public class DoctorModel {
     @OneToOne(mappedBy = "doctorModel")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    private Collection<Appointment> doctorAppointments;
-
     public DoctorModel() {
     }
 
     public DoctorModel(
+            String name,
+            String surname,
             String role,
             String office,
             String timeTable,
             String salary,
             String phone
     ) {
+        this.name = name;
+        this.surname = surname;
         this.role = role;
         this.office = office;
         this.timeTable = timeTable;

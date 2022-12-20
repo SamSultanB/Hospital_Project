@@ -1,7 +1,7 @@
 package com.hospital.Final_project.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hospital.Final_project.model.ClientModel;
+import com.hospital.Final_project.model.PatientModel;
 import com.hospital.Final_project.model.DoctorModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +17,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "userName")
-    private String userName;
-    @Column(name = "userSurname")
-    private String userSurname;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
@@ -42,17 +38,15 @@ public class User {
     private DoctorModel doctorModel;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_client_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_patient_id", referencedColumnName = "id")
     @JsonIgnore
-    private ClientModel clientModel;
+    private PatientModel patientModel;
 
     public User(){
 
     }
 
-    public User(String userName, String userSurname, String email, String password, Collection<Role> userRole) {
-        this.userName = userName;
-        this.userSurname = userSurname;
+    public User(String email, String password, Collection<Role> userRole) {
         this.email = email;
         this.password = password;
         this.userRole = userRole;

@@ -13,13 +13,17 @@ import java.util.Collection;
 @Getter
 @Setter
 @Entity
-@Table(name = "clients")
-public class ClientModel {
+@Table(name = "patients")
+public class PatientModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
     @Column(name = "dateOFbirth", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfbirth;
@@ -32,18 +36,20 @@ public class ClientModel {
     @Column(name = "phone", nullable = false)
     private Integer phone;
 
-    @OneToOne(mappedBy = "clientModel")
+    @OneToOne(mappedBy = "patientModel")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Collection<Appointment> appointments;
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    private Collection<IllnessModel> illnesses;
 
-    public ClientModel(){
+    public PatientModel(){
 
     }
 
-    public ClientModel(
+    public PatientModel(
+            String name,
+            String surname,
             LocalDate dateOfbirth,
             String bloodGroup,
             String height,
@@ -51,6 +57,8 @@ public class ClientModel {
             Integer phone
     )
     {
+        this.name = name;
+        this.surname = surname;
         this.dateOfbirth = dateOfbirth;
         this.bloodGroup = bloodGroup;
         this.height = height;
