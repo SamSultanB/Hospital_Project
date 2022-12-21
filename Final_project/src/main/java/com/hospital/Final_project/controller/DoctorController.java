@@ -40,9 +40,20 @@ public class DoctorController {
     }
 
     @PostMapping("/my-information")
-    public ResponseEntity<String> updateDoctorInfo(@RequestParam DoctorModel doctorModel, Principal principal){
+    public ResponseEntity<String> updateDoctorInfo(@RequestBody DoctorModel newDoctorModel, Principal principal){
         User user = userService.findByEmail(principal.getName());
-        user.setDoctorModel(doctorModel);
+        DoctorModel doctorModel = user.getDoctorModel();
+        if(doctorModel == null){
+            user.setDoctorModel(newDoctorModel);
+        }else{
+            doctorModel.setName(newDoctorModel.getName());
+            doctorModel.setSurname(newDoctorModel.getSurname());
+            doctorModel.setRole(newDoctorModel.getRole());
+            doctorModel.setOffice(newDoctorModel.getOffice());
+            doctorModel.setTimeTable(newDoctorModel.getTimeTable());
+            doctorModel.setSalary(newDoctorModel.getSalary());
+            doctorModel.setPhone(newDoctorModel.getPhone());
+        }
         userService.saveInfo(user);
         return ResponseEntity.ok("Doctor, your information was successfully updated!");
     }
@@ -59,7 +70,9 @@ public class DoctorController {
 
     @PostMapping("/patients/{id}")
     public ResponseEntity<String> diagnosPatient(@PathVariable("id") Long id, @RequestBody IllnessModel illnessModel){
-        patientService.getPatientById(id).getIllnesses().add(illnessModel);
+        PatientModel patientModel = patientService.getPatientById(id);
+        patientModel.getIllnesses().add(illnessModel);
+        patientService.savePatient(patientModel);
         return ResponseEntity.ok("Diagnosed successfully!");
     }
 

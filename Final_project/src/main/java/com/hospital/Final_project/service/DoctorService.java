@@ -22,4 +22,6 @@ public interface DoctorService {
 //    List<DoctorModel> getAllTimeTables();
 
     DoctorModel getDoctorById(Long id);
+
+    DoctorModel getDoctorWithMaxSalary();
 }

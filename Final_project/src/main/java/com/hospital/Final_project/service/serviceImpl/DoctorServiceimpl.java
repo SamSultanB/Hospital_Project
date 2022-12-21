@@ -46,5 +46,10 @@ public class DoctorServiceimpl implements DoctorService {
         return doctorRepository.findById(id).get();
     }
 
+    @Override
+    public DoctorModel getDoctorWithMaxSalary() {
+        return doctorRepository.findDoctorWithMaxSalary();
+    }
+
 
 }

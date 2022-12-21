@@ -40,10 +40,21 @@ public class PatientController {
     }
 
     @PostMapping("/my-information")
-    public ResponseEntity<String> updateClientInfo(Principal principal, @RequestBody PatientModel patientModel){
+    public ResponseEntity<String> updateClientInfo(Principal principal, @RequestBody PatientModel newPatientModel){
         String email = principal.getName();
         User user = userService.findByEmail(email);
-        user.setPatientModel(patientModel);
+        PatientModel patientModel = user.getPatientModel();
+        if(patientModel == null){
+            user.setPatientModel(newPatientModel);
+        }else{
+            patientModel.setName(newPatientModel.getName());
+            patientModel.setSurname(newPatientModel.getSurname());
+            patientModel.setDateOfbirth(newPatientModel.getDateOfbirth());
+            patientModel.setBloodGroup(newPatientModel.getBloodGroup());
+            patientModel.setHeight(newPatientModel.getHeight());
+            patientModel.setWeight(newPatientModel.getWeight());
+            patientModel.setPhone(newPatientModel.getPhone());
+        }
         userService.saveInfo(user);
         return ResponseEntity.ok("Your information was updated successfully");
     }
