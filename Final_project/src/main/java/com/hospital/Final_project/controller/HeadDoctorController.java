@@ -10,6 +10,7 @@ import com.hospital.Final_project.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -39,9 +40,20 @@ public class HeadDoctorController {
     }
 
     @PostMapping("/my-information")
-    public ResponseEntity<String> updateHeadDoctorInfo(@RequestBody DoctorModel doctorModel, Principal principal){
+    public ResponseEntity<String> updateHeadDoctorInfo(@RequestBody DoctorModel newDoctorModel, Principal principal){
         User user = userService.findByEmail(principal.getName());
-        user.setDoctorModel(doctorModel);
+        DoctorModel doctorModel = user.getDoctorModel();
+        if(doctorModel == null){
+            user.setDoctorModel(newDoctorModel);
+        }else{
+            doctorModel.setName(newDoctorModel.getName());
+            doctorModel.setSurname(newDoctorModel.getSurname());
+            doctorModel.setRole(newDoctorModel.getRole());
+            doctorModel.setOffice(newDoctorModel.getOffice());
+            doctorModel.setTimeTable(newDoctorModel.getTimeTable());
+            doctorModel.setSalary(newDoctorModel.getSalary());
+            doctorModel.setPhone(newDoctorModel.getPhone());
+        }
         userService.saveInfo(user);
         return ResponseEntity.ok("Your information was updated successfully!");
     }
@@ -69,14 +81,10 @@ public class HeadDoctorController {
         return ResponseEntity.ok("Doctor deleted successfully!");
     }
 
+
     @GetMapping("/patients")
     public ResponseEntity<Collection<PatientModel>> getAllPatients(){
         return ResponseEntity.ok(patientService.getAllPatients());
-    }
-
-    @GetMapping("/patients/{name}")
-    public ResponseEntity<PatientModel> getPatientByName(@PathVariable("name") String name){
-        return ResponseEntity.ok(patientService.getPatientByName(name));
     }
 
     @GetMapping("/patients/{id}")
